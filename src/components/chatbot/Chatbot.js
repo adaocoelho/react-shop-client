@@ -5,7 +5,8 @@ import { queryAllByAltText } from '@testing-library/react';
 
 
 class Chatbot extends React.Component {
-
+    messagesEnd;
+    talkInput;
     constructor(props) {
         super(props)
         
@@ -54,7 +55,10 @@ for (let msg of res.data.fulfillmentMessages) {
         this.event_query('Welcome');
     }
 
-
+componentDidUpdate() {
+    this.messagesEnd.scrollIntoView({behaviour: "smooth"});
+    this.talkInput.focus();
+}
 
 renderMessages(stateMessages) {
     if (stateMessages) {
@@ -82,7 +86,10 @@ handleInputKeyPress(e) {
                 <div id='chatbot' style={{height: '100%', width: '100%', overflow: 'auto' }} >
                  <h2>Toby</h2>
                  {this.renderMessages(this.state.messages)}
-                 <input type="text" onKeyPress={this.handleInputKeyPress} />
+                 <div ref={(el) => {this.messagesEnd = el;}}         
+                 style={{float: 'left', clear: "both"}}>
+                 </div>
+                 <input type="text" ref={(input) => {this.talkInput = input}} onKeyPress={this.handleInputKeyPress} />
 
                 </div>
 
