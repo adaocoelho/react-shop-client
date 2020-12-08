@@ -28,11 +28,6 @@ class QuickReplies extends Component {
     }
 
 
-
-
-
-
-
     render() {
         return (
             <div className="col s12 m8 offset-m2 l6 offset-l3">
@@ -46,7 +41,7 @@ class QuickReplies extends Component {
                                 {this.props.text.stringValue}
                             </p>
                             }
-                            {this.renderQuickReplies(this.props.payload)}
+                            {this.renderQuickReplies(this.props.payload)} 
                         </div>
                     </div>
                 </div>
