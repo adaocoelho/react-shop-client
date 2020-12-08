@@ -4,6 +4,7 @@ import Message from "./Message";
 import Cookies from "universal-cookie";
 import { v4 as uuid } from "uuid";
 import Card from './Card';
+import QuickReplies from './QuickReplies';
 
 const cookies = new Cookies();
 
@@ -13,7 +14,9 @@ class Chatbot extends React.Component {
   constructor(props) {
     super(props);
 
+    // binding com callback
     this.handleInputKeyPress = this.handleInputKeyPress.bind(this);
+    this.handleQuickReplyPayload = this.handleQuickReplyPayload.bind(this);
     this.state = {
       messages: [],
     };
@@ -69,6 +72,15 @@ class Chatbot extends React.Component {
   }
 
 
+handleQuickReplyPayload(event, payload, text) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.text_query(text);
+
+}
+
+
 renderCards(cards) {
     return cards.map((card, i ) => <Card key={i} payload={card.structValue}/>)
 }
@@ -91,8 +103,19 @@ renderCards(cards) {
                 </div>
             </div>
         </div>
+    } else if (message.msg &&
+        message.msg.payload &&
+        message.msg.payload.fields &&
+        message.msg.payload.fields.quick_replies
+    ) {
+        return <QuickReplies
+                text={message.msg.payload.fields.text ? message.msg.payload.fields.text : null}
+                key={i}
+                replyClick={this._handleQuickReplyPayload}
+                speaks={message.speaks}
+                payload={message.msg.payload.fields.quick_replies.listValue.values}/>;
+        }
     }
-}
   
 
   renderMessages(returnedMessages) {
