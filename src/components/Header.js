@@ -6,7 +6,7 @@ function Header() {
   return (
     <nav>
       <div className="nav-wrapper">
-        <Link to={"/"} classNAme="brand-logo">
+        <Link to={"/"} className="brand-logo">
           Home
         </Link>
         <ul id="nav-mobile" className="right hide-on-med-and-down">

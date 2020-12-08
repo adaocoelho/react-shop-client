@@ -3,6 +3,9 @@ import axios from "axios";
 import Message from "./Message";
 import Cookies from "universal-cookie";
 import { v4 as uuid } from "uuid";
+import Card from './Card';
+
+const cookies = new Cookies();
 
 class Chatbot extends React.Component {
   messagesEnd;
@@ -14,21 +17,29 @@ class Chatbot extends React.Component {
     this.state = {
       messages: [],
     };
+
+
+    if (cookies.get('cookiesId') === undefined) {
+        cookies.set('cookiesId', uuid(), { path: '/'});
+    }
+    console.log(cookies.get('cookiesId'));
+
   }
 
-  async text_query(text) {
+  async text_query(queryText) {
     let says = {
       speaks: "me",
       msg: {
         text: {
-          text: text,
+          text: queryText,
         },
       },
     };
 
     this.setState({ messages: [...this.state.messages, says] });
-    const res = await axios.post("api/text-query", { text });
+    const res = await axios.post("api/text-query", { text: queryText, cookiesId: cookies.get('cookiesId') });
     for (let msg of res.data.fulfillmentMessages) {
+        console.log(JSON.stringify(msg));
       says = {
         speaks: "Toby",
         msg: msg,
@@ -37,8 +48,8 @@ class Chatbot extends React.Component {
     }
   }
 
-  async event_query(event) {
-    const res = await axios.post("/api/event-query", { event });
+  async event_query(eventName) {
+    const res = await axios.post("/api/event-query", { event: eventName, cookiesId: cookies.get('cookiesId') });
     for (let msg of res.data.fulfillmentMessages) {
       let says = {
         speaks: "me",
@@ -57,21 +68,42 @@ class Chatbot extends React.Component {
     this.talkInput.focus();
   }
 
-  renderMessages(stateMessages) {
-    if (stateMessages) {
-      return stateMessages.map((message, i) => {
-        return (
-          <Message
-            key={i}
-            speaks={message.speaks}
-            text={message.msg.text.text}
-          />
-        );
-      });
-    } else {
-      return null;
+
+renderCards(cards) {
+    return cards.map((card, i ) => <Card key={i} payload={card.structValue}/>)
+}
+
+  renderOneMessage(message, i) {
+    if (message.msg && message.msg.text && message.msg.text.text) {
+        return <Message key={i} speaks={message.speaks} text={message.msg.text.text}/>;
+    } else if (message.msg && message.msg.payload && message.msg.payload.fields && message.msg.payload.fields.cards) {
+        return <div key={i}>
+            <div className="card-panel- grey lighten-5 z-depth-1">
+                <div style={{overflow: 'hidden'}}>
+                <div className="col s2">
+            <a className="btn-floating btn-large waves-effect waves-light green">{message.speaks}</a>
+                </div>
+                <div style={{overflow: 'auto', overflowY: 'scroll' }}>
+                    <div style={{height: 300, width: message.msg.payload.fields.cards.listValue.values.length * 270 }}>
+                        {this.renderCards(message.msg.payload.fields.cards.listValue.values)}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     }
-  }
+}
+  
+
+  renderMessages(returnedMessages) {
+    if (returnedMessages) {
+        return returnedMessages.map((message, i) => {
+            return this.renderOneMessage(message, i);
+    });
+    } else {
+        return null;
+    }
+}
 
   handleInputKeyPress(e) {
     if (e.key === "Enter") {
@@ -82,27 +114,29 @@ class Chatbot extends React.Component {
 
   render() {
     return (
-      <div style={{ height: 400, width: 400, float: "right" }}>
-        <div
-          id="chatbot"
-          style={{ height: "100%", width: "100%", overflow: "auto" }}
-        >
-          <h2>Toby</h2>
+      <div style={{ height: 500, width: 400, position: 'absolute', bottom: 0, right: 0, border: '1px solid lightdark'  }}>
+        <nav>
+            <div className="nav-wrapper">
+                <a className="brand-logo">Toby Hawk</a>
+            </div>
+        </nav>
+
+        <div id="chatbot" style={{ height: 388, width: "100%", overflow: "auto" }}>
+
           {this.renderMessages(this.state.messages)}
           <div
             ref={(el) => {
               this.messagesEnd = el;
             }}
-            style={{ float: "left", clear: "both" }}
-          ></div>
-          <input
-            type="text"
-            ref={(input) => {
-              this.talkInput = input;
-            }}
-            onKeyPress={this.handleInputKeyPress}
-          />
+            style={{ float: "left", clear: "both" }}>
+
+          </div>
         </div>
+        <div className="col s12">
+        <input style={{margin: 0, paddingLeft: '1%', paddingRight: '1%', width: '98%'}} placeholder="type a message" type="text" ref={(input) => { this.talkInput = input;}} onKeyPress={this.handleInputKeyPress}/>
+
+        </div>
+
       </div>
     );
   }
