@@ -5,7 +5,7 @@ function Landing() {
         <div style= {{textAlign: 'center '}}>
         
         <h1>Selling some skateaboards</h1>
-        <p>with Toby, your personal skate shopping assistant</p>
+        <p>with Toby Hawk, your personal skate shopping assistant</p>
         
         </div>
     )

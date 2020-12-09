@@ -3,7 +3,7 @@ import React from "react";
 function About() {
   return (
     <div>
-      <h1>About our Brand</h1>
+      <h1>Who is Toby</h1>
     </div>
   );
 }

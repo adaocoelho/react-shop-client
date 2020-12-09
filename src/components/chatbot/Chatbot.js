@@ -17,14 +17,13 @@ class Chatbot extends React.Component {
     // binding com callback
     this.handleInputKeyPress = this.handleInputKeyPress.bind(this);
     this.handleQuickReplyPayload = this.handleQuickReplyPayload.bind(this);
-    
+
     this.hide = this.hide.bind(this);
     this.show = this.show.bind(this);
-    
-    
+
     this.state = {
       messages: [],
-      showBot: true //bot sempre visivel por default
+      showBot: true, //bot sempre visivel por default
     };
 
     if (cookies.get("cookiesId") === undefined) {
@@ -78,37 +77,37 @@ class Chatbot extends React.Component {
 
   componentDidUpdate() {
     this.messagesEnd.scrollIntoView({ behaviour: "smooth" });
-    if (this.talkInput ) {
-        this.talkInput.focus();
+    if (this.talkInput) {
+      this.talkInput.focus();
     }
   }
 
-// fechar e abrir bot
+  // fechar e abrir bot
 
   show(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.setState({showBot: true});
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ showBot: true });
   }
 
   hide(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.setState({showBot: false})
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ showBot: false });
   }
 
+  //quickreplies setup
   handleQuickReplyPayload(event, payload, text) {
     event.preventDefault();
     event.stopPropagation();
 
-    switch(payload) {
-        case 'training_skateclass':
-            this.event_query('SKATECLASS');
-            default:
-            this.text_query(text);
-            break;
+    switch (payload) {
+      case "training_skateclass":
+        this.event_query("SKATECLASS");
+      default:
+        this.text_query(text);
+        break;
     }
-    
   }
 
   renderCards(cards) {
@@ -196,34 +195,89 @@ class Chatbot extends React.Component {
   }
 
   render() {
-      if (this.state.showBot) {
-    return (
-      <div
-        style={{
-          height: 500,
-          width: 400,
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          border: "5px solid lightdark",
-        }}
-      >
-        <nav>
-          <div className="nav-wrapper">
-            <a href="/" className="brand-logo">
-              Toby Hawk
-            </a>
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li><a href="/" onClick={this.hide}>Close</a></li>
-            </ul>
-          </div>
-        </nav>
-
+    if (this.state.showBot) {
+      return (
         <div
-          id="chatbot"
-          style={{ height: 388, width: "100%", overflow: "auto" }}
+          style={{
+            height: 400,
+            width: 950,
+            position: "absolute",
+            bottom: 0,
+            right: 200,
+            border: "5px solid lightdark",
+          }}
         >
-          {this.renderMessages(this.state.messages)}
+          <nav>
+            <div className="nav-wrapper">
+              <a href="/" className="brand-logo">
+                Toby Hawk
+              </a>
+              <ul id="nav-mobile" className="right hide-on-med-and-down">
+                <li>
+                  <a href="/" onClick={this.hide}>
+                    Close
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <div
+            id="chatbot"
+            style={{ height: 388, width: "100%", overflow: "auto" }}
+          >
+            {this.renderMessages(this.state.messages)}
+            <div
+              ref={(el) => {
+                this.messagesEnd = el;
+              }}
+              style={{ float: "left", clear: "both" }}
+            ></div>
+          </div>
+          <div className="col s12">
+            <input
+              style={{
+                margin: 0,
+                paddingLeft: "1%",
+                paddingRight: "1%",
+                width: "98%",
+              }}
+              placeholder="type a message"
+              type="text"
+              ref={(input) => {
+                this.talkInput = input;
+              }}
+              onKeyPress={this.handleInputKeyPress}
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            height: 400,
+            width: 400,
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            border: "5px solid lightdark",
+          }}
+        >
+          <nav>
+            <div className="nav-wrapper">
+              <a href="/" className="brand-logo">
+                Toby Hawk
+              </a>
+              <ul id="nav-mobile" className="right hide-on-med-and-down">
+                <li>
+                  <a href="/" onClick={this.show}>
+                    Open
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
           <div
             ref={(el) => {
               this.messagesEnd = el;
@@ -231,55 +285,9 @@ class Chatbot extends React.Component {
             style={{ float: "left", clear: "both" }}
           ></div>
         </div>
-        <div className="col s12">
-          <input
-            style={{
-              margin: 0,
-              paddingLeft: "1%",
-              paddingRight: "1%",
-              width: "98%",
-            }}
-            placeholder="type a message"
-            type="text"
-            ref={(input) => {
-              this.talkInput = input;
-            }}
-            onKeyPress={this.handleInputKeyPress}
-          />
-        </div>
-      </div>
-    );
-  } else {
-      return (
-        <div
-        style={{
-          height: 500,
-          width: 400,
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          border: "5px solid lightdark",
-        }}
-      >
-        <nav>
-          <div className="nav-wrapper">
-            <a href="/" className="brand-logo">
-              Toby Hawk
-            </a>
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li><a href="/" onClick={this.show}>Open</a></li>
-            </ul>
-          </div>
-        </nav>
-        <div ref={(el) => {this.messagesEnd = el; }}
-            style={{float:"left", clear:"both"}}>
-
-            </div>
-        
-      </div>
-      )
+      );
+    }
   }
-}
 }
 
 export default Chatbot;

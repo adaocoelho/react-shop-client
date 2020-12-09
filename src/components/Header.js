@@ -10,11 +10,17 @@ function Header() {
           Home
         </Link>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li>
+        <li>
             <Link to={"/shop"}>Products</Link>
           </li>
+        <li>
+            <Link to={"/about"}>Toby</Link>
+          </li>
           <li>
-            <Link to={"/about"}>Our Brand</Link>
+            <Link to={"/login"}>Login</Link>
+          </li>
+          <li>
+            <Link to={"/signup"}>Signup</Link>
           </li>
         </ul>
       </div>
