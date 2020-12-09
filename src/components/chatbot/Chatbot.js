@@ -5,6 +5,8 @@ import Cookies from "universal-cookie";
 import { v4 as uuid } from "uuid";
 import Card from "./Card";
 import QuickReplies from "./QuickReplies";
+import './Chatbot.css';
+import { Navbar, Nav } from "react-bootstrap";
 
 const cookies = new Cookies();
 
@@ -23,7 +25,7 @@ class Chatbot extends React.Component {
 
     this.state = {
       messages: [],
-      showBot: true, //bot sempre visivel por default
+      showBot: false, //visibilidade por default
     };
 
     if (cookies.get("cookiesId") === undefined) {
@@ -197,7 +199,7 @@ class Chatbot extends React.Component {
   render() {
     if (this.state.showBot) {
       return (
-        <div
+        <div 
           style={{
             height: 400,
             width: 950,
@@ -207,20 +209,13 @@ class Chatbot extends React.Component {
             border: "5px solid lightdark",
           }}
         >
-          <nav>
-            <div className="nav-wrapper">
-              <a href="/" className="brand-logo">
-                Toby Hawk
-              </a>
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li>
-                  <a href="/" onClick={this.hide}>
-                    Close
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <Navbar bg="dark" variant="dark">
+             
+              <Nav.Link href="/" onClick={this.hide}>
+                    ❌
+                  </Nav.Link>
+            
+          </Navbar>
 
           <div
             id="chatbot"
@@ -264,20 +259,13 @@ class Chatbot extends React.Component {
             border: "5px solid lightdark",
           }}
         >
-          <nav>
-            <div className="nav-wrapper">
-              <a href="/" className="brand-logo">
-                Toby Hawk
-              </a>
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li>
-                  <a href="/" onClick={this.show}>
-                    Open
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <Navbar bg="dark" variant="dark">
+            
+            <Nav.Link href="/" onClick={this.show}>
+                  CLICK FLIP TO OPEN ✌
+                </Nav.Link>
+          
+        </Navbar>
           <div
             ref={(el) => {
               this.messagesEnd = el;

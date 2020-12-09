@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
@@ -7,6 +7,8 @@ import Header from "./Header";
 import Chatbot from "./chatbot/Chatbot";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Success from "./pages/Success";
+
 
 /*const App = () => {
     return (
@@ -25,7 +27,7 @@ function App() {
           <Route exact path="/shop" component={Shop} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-
+          <Route exact path="/success" component={Success} />
           <Chatbot />
         </div>
       </BrowserRouter>
