@@ -8,6 +8,7 @@ import Chatbot from "./chatbot/Chatbot";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Success from "./pages/Success";
+import LoginSuccess from "./pages/LoginSuccess";
 
 
 /*const App = () => {
@@ -28,6 +29,8 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/success" component={Success} />
+          <Route exact path="/loginsuccess" component={LoginSuccess} />
+
           <Chatbot />
         </div>
       </BrowserRouter>

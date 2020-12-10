@@ -22,10 +22,11 @@ class Login extends React.Component {
         .then((response) => {
             //Lifting the state up to app.js
             //setCurrentUser comes as a prop from app.js
-            this.props.setCurrentUser(response.data);
+            console.log(response.data)
+//            this.props.setCurrentUser(response.data);
             //save user id browser local storage
             localStorage.setItem('loggedInUser', response.data._id);
-            this.props.history.push('/projects');
+            this.props.history.push('/loginsuccess');
 
         })
 

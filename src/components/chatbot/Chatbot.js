@@ -134,7 +134,7 @@ class Chatbot extends React.Component {
               <div className="col s2">
                 <a
                   href="/"
-                  className="btn-floating btn-large waves-effect waves-light green"
+                  className="btn-floating btn-large waves-effect waves-light purple"
                 >
                   {message.speaks}
                 </a>
@@ -219,7 +219,7 @@ class Chatbot extends React.Component {
 
           <div
             id="chatbot"
-            style={{ height: 388, width: "100%", overflow: "auto" }}
+            style={{ height: 500, width: "100%", overflow: "auto" }}
           >
             {this.renderMessages(this.state.messages)}
             <div
@@ -253,7 +253,7 @@ class Chatbot extends React.Component {
           style={{
             height: 400,
             width: 400,
-            position: "relative", //change from absolute
+            position: "relative", 
             bottom: 0,
             right: 0,
             border: "5px solid lightdark",
