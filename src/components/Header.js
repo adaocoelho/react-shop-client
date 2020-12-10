@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './Header.css';
 import { Navbar, Nav } from 'react-bootstrap';
+import logo from './logo.png'
 
 function Header() {
     return (
@@ -10,12 +11,12 @@ function Header() {
     <Navbar.Brand href="/">
     <img
         alt="logo"
-        src="#"
-        width="100"
-        height="30"
+        src={logo}
+        width="130"
+        height="60"
         className="d-inline-block align-top"
-      />{' '}
-      T#
+      />
+      
     </Navbar.Brand>
     <Nav className="justify-content-end" style={{ width: "100%" }}>
     <Nav.Item>

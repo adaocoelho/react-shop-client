@@ -1,12 +1,13 @@
 import React from 'react';
+import pic from './landing.png'
+import Image from 'react-bootstrap/Image'
 
 function Landing() {
     return (
+        
         <div style= {{textAlign: 'center '}}>
         
-        <h1>Selling some skateaboards</h1>
-        <p>with Toby Hawk, your personal skate shopping assistant</p>
-        
+        <Image src={pic} fluid />
         </div>
     )
 }

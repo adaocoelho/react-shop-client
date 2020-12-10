@@ -253,7 +253,7 @@ class Chatbot extends React.Component {
           style={{
             height: 400,
             width: 400,
-            position: "absolute",
+            position: "relative", //change from absolute
             bottom: 0,
             right: 0,
             border: "5px solid lightdark",
