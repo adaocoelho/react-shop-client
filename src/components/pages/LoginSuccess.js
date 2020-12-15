@@ -1,13 +1,12 @@
-import React from 'react';
+import React from "react";
 
 function LoginSuccess() {
-    return (
-      <div style= {{textAlign: 'center '}}>
-        <h1>Thanks for loggin </h1>
-        <h4>Now you can talk to Toby Hawk, your personal skater bot.</h4>
+  return (
+    <div style={{ textAlign: "center " }}>
+      <h1>Hello adoniscoelhonis </h1>
+      <h4>Now you can talk to Toby Hawk, your personal skater bot.</h4>
+    </div>
+  );
+}
 
-      </div>
-    );
-  }
-  
-  export default LoginSuccess;
+export default LoginSuccess;
